@@ -37,6 +37,8 @@ public class TestJedis {
     @Before
     public void setup(){
         j = new Jedis();
+        //j.auth("");  //redis密码(目前没有密码)
+        //j.select(0);  //选择数据表（默认0表）
     }
 
     //测试方法执行后：关闭连接
@@ -51,10 +53,22 @@ public class TestJedis {
     //String的基本使用
     @Test
     public  void  testString(){
+        //添加（key存在，即为覆盖）
         String set = j.set("aaa", "bbb");
         System.out.println(set);
+        //添加数组
+        Long msetnx = j.msetnx("111", "222", "333");
+        System.out.println(msetnx);
+        //修改
+        Long append = j.append("aaa", "ccc");
+        System.out.println(append);
+        //删除
+        //Long del = j.del("aaa");
+        //System.out.println(del);
+        //获取
         String get = j.get("aaa");
         System.out.println(get);
+
     }
 
     //hash对象的基本操作
